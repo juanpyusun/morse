@@ -1,8 +1,6 @@
 
 from itertools import combinations
 
-
-
 morse_code_dict= {
     "A": ".-", "B": "-...", "C": "-.-.", "D": "-..", "E": ".", "F": "..-.", "G": "--.",
     "H": "....", "I": "..", "J": ".---", "K": "-.-", "L": ".-..", "M": "--", "N": "-.",
@@ -29,12 +27,16 @@ def decrypt(mensaje: str) -> str:
 #Metodo para desencriptar de morse a texto, brindando todas las opciones posibles
 def subconjuntos(mensaje_encriptado:str)->None:
     f=open("morse.txt","w")
-    #aqui va el codigo morse mal escrito para probar todas las posibles traducciones
+    
+#aqui va el codigo morse mal escrito para probar todas las posibles traducciones
     cantidad_elementos=len(mensaje_encriptado)
-
+    
+    if cantidad_elementos<=5 :
+        f.write(mensaje_encriptado+" "+decrypt(mensaje_encriptado))
+        f.write("\n")
+    
     for n in range(1,cantidad_elementos):
         posicion_coma_grupo=list(combinations(range(1,cantidad_elementos),n))
-
         for posicion_coma in posicion_coma_grupo:
             subconjunto=[]
             mensaje_salida=""
@@ -44,6 +46,7 @@ def subconjuntos(mensaje_encriptado:str)->None:
                 mensaje_salida+=decrypt(mensaje_encriptado[inicio:single_coma_position])
                 subconjunto.append(mensaje_encriptado[inicio:single_coma_position])
                 inicio=single_coma_position
+
             subconjunto.append(mensaje_encriptado[inicio:])
             mensaje_salida+=decrypt(mensaje_encriptado[inicio:])
 
